@@ -1,0 +1,67 @@
+version: '3.8'
+services:
+  clients-service:
+    image: clients-ecommerce-service:0.0.5
+    container_name: clients-ecommerce
+    ports:
+      - "5001:5000"
+    env_file:
+     - .env
+    networks:
+      - ecommerce_network
+  users-service:
+    image: users-ecommerce-service:0.0.6
+    container_name: users-ecommerce
+    ports:
+      - "5002:5000"
+    env_file:
+     - .env
+    networks:
+      - ecommerce_network
+  product-service:
+    image: product-ecommerce-service:0.0.5
+    container_name: product-ecommerce
+    ports:
+      - "5003:5000"
+    env_file:
+     - .env
+    networks:
+      - ecommerce_network
+  orders-service:
+    image: orders-ecommerce-service:0.0.2
+    container_name: orders-ecommerce
+    ports:
+      - "5004:5000"
+    env_file:
+     - .env
+    networks:
+      - ecommerce_network
+  email-service:
+    image: email-ecommerce-service:0.0.2
+    container_name: email-ecommerce
+    ports:
+      - "5005:5000"
+    env_file:
+     - .env
+    networks:
+      - ecommerce_network
+  esb-service:
+    image: esb-service-ecommerce-service:0.0.5
+    container_name: esb-service-ecommerce
+    ports:
+      - "8081:8080"
+    env_file:
+     - .env
+    networks:
+      - ecommerce_network
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M 
+
+networks:
+  ecommerce_network:
+    driver: bridge
+    name: ecommerce_network
